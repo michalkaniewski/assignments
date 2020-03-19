@@ -41,7 +41,10 @@ def countries_with_no_deaths_count(date: datetime.date) -> int:
     """
     
     # Your code goes here
-    pass
+    strdate = format_date(date)
+    dc=dfC[['Province/State', 'Country/Region', strdate]].merge(dfD[['Province/State', 'Country/Region', strdate]], on=['Province/State', 'Country/Region'])
+    dc.columns = ['Province/State', 'Country/Region', 'confirmed', 'deaths']
+    return dc.loc[dc['confirmed'] > 0].loc[dc['deaths'] == 0].count()[3]
 
 
 def more_cured_than_deaths_indices(date: datetime.date) -> List[int]:
